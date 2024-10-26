@@ -1,4 +1,4 @@
-from marchiingcube.app import Application
+from marchingcube.app import Application
 
 
 

@@ -19,8 +19,12 @@ setup(
     install_requires=[
         'pynrrd',
         'matplotlib',
+        'tkinter',
         'scikit-image'
     ],
     entry_points={
+        'console_scripts': [
+		    'mc = marchingcube.main:main',
+		],
     },
 )

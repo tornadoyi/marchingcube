@@ -4,8 +4,8 @@ from matplotlib.axes import Axes
 from matplotlib.widgets import Button, Slider
 from tkinter.filedialog import askopenfilename
 import numpy as np
-from marchiingcube import dataset
-from marchiingcube import mc
+from marchingcube import dataset
+from marchingcube import mc
 
 __all__ = [
     'Application'
