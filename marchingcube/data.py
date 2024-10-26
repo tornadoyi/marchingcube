@@ -11,10 +11,6 @@ __all__ = [
 ]
 
 
-CUR_DIR = os.path.dirname(os.path.abspath(__file__))
-DATASET_DIR = os.path.join(CUR_DIR, 'dataset')
-
-
 def cos_sphere(n=30):
     nj = complex(n)
     x, y, z = np.pi * np.mgrid[-1:1:nj, -1:1:nj, -1:1:nj]
@@ -42,11 +38,10 @@ MATH_LOADERS = [
 
 
 def load_random_nrrd() -> np.ndarray:
-    print(DATASET_DIR)
-    print(os.listdir(DATASET_DIR))
+    dataset_path = os.environ['DATASET_PATH']
     data_files = [
-        os.path.join(DATASET_DIR, f)
-        for f in os.listdir(DATASET_DIR)
+        os.path.join(dataset_path, f)
+        for f in os.listdir(dataset_path)
         if os.path.splitext(f)[-1] in FILE_EXT_LOADERS
     ]
 
