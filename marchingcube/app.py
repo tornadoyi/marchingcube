@@ -4,7 +4,7 @@ from matplotlib.axes import Axes
 from matplotlib.widgets import Button, Slider
 from tkinter.filedialog import askopenfilename
 import numpy as np
-from marchingcube import dataset
+from marchingcube import data
 from marchingcube import mc
 
 __all__ = [
@@ -35,7 +35,7 @@ class Application(object):
         max_axis_cells: int = 30,
     ) -> None:
         self._max_axis_cells = max_axis_cells
-        self._isosurface_ratio = 0
+        self._isosurface_ratio = 1
         self._figure = plt.figure(title, figsize=size)
         self._ax = self._figure.add_subplot(projection='3d')
 
@@ -61,7 +61,7 @@ class Application(object):
             'Isosurface Ratio',
             valmin=0,
             valmax=1,
-            valinit=0,
+            valinit=1,
         )
         self._sld_isosurface.on_changed(self._on_isosurface_changed)
 
@@ -73,13 +73,13 @@ class Application(object):
         fpath = askopenfilename()
         if len(fpath) == 0:
             return
-        self._process_raw_data(dataset.load(fpath))
+        self._process_raw_data(data.load(fpath))
 
     def _on_load_nrrd(self, event):
-        self._process_raw_data(dataset.load_random_nrrd())
+        self._process_raw_data(data.load_random_nrrd())
 
     def _on_load_math(self, event):
-        self._process_raw_data(dataset.load_random_math())
+        self._process_raw_data(data.load_random_math())
 
     def _on_isosurface_changed(self, value):
         if abs(self._isosurface_ratio - value) < 1e-3:

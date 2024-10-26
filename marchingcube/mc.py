@@ -4,7 +4,7 @@ from typing import Dict, Tuple, List
 import sys
 import math
 import numpy as np
-import skimage
+import skimage.measure as skmeasure
 
 VertexType = Tuple[int, int, int]
 EdgeType = Tuple[VertexType, VertexType]
@@ -436,5 +436,5 @@ def make_block(
     if block_size == (1, 1, 1):
         return voxels
 
-    voxels = skimage.measure.block_reduce(voxels, block_size, np.mean)
+    voxels = skmeasure.block_reduce(voxels, block_size, np.mean)
     return voxels
