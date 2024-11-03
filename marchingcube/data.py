@@ -2,6 +2,7 @@ import os
 import random
 import nrrd
 import numpy as np
+import json
 from skimage import draw
 
 
@@ -55,6 +56,36 @@ def load_random_math() -> np.ndarray:
     index = random.randint(0, len(data_fns)-1)
     fn = MATH_LOADERS[index]
     return fn()
+
+
+_SCALAR_TYPES = {
+    'unsigned_short': np.uint16,
+    'short': np.int16,
+    'unsigned_char': np.uint8,
+    'char': np.int8,
+}
+
+
+def load_raw(fpath: str) -> np.ndarray:
+    meta_fpath = os.path.splitext(fpath)[0] + '.json'
+    if not os.path.isfile(meta_fpath):
+        raise Exception(f"no such meta file {meta_fpath}")
+
+    # meta
+    with open(meta_fpath, 'r') as f:
+        metadata = json.load(f)
+
+    dimensions = metadata['dimensions']
+    spacing = metadata['spacing']
+    scalar_type = metadata['scalar_type']
+
+    np_dtype = _SCALAR_TYPES.get(scalar_type)
+    if np_dtype is None:
+        raise ValueError(f"invalid scalar type {scalar_type}")
+
+    # load raw
+    raw_data = np.fromfile(fpath, dtype=np_dtype)
+    return raw_data.reshape(dimensions[2], dimensions[1], dimensions[0])
 
 
 def load(fpath: str):

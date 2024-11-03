@@ -41,8 +41,8 @@ class Application(object):
 
         # load button
         ax = self._figure.add_axes([0.1, 0.05, 0.09, 0.05])
-        self._bt_load = Button(ax, 'Load')
-        self._bt_load.on_clicked(self._on_load_click)
+        self._bt_load = Button(ax, 'Load Raw')
+        self._bt_load.on_clicked(self._on_load_raw)
 
         # load nrrd
         ax = self._figure.add_axes([0.2, 0.05, 0.09, 0.05])
@@ -69,11 +69,11 @@ class Application(object):
         # plt.ion()
         plt.show()
 
-    def _on_load_click(self, event):
+    def _on_load_raw(self, event):
         fpath = askopenfilename()
         if len(fpath) == 0:
             return
-        self._process_raw_data(data.load(fpath))
+        self._process_raw_data(data.load_raw(fpath))
 
     def _on_load_nrrd(self, event):
         self._process_raw_data(data.load_random_nrrd())
