@@ -384,6 +384,7 @@ def marching_cubes_voxel(
 def marching_cubes(
     voxels: np.ndarray,
     isosurface: float,
+    verbose: bool = False,
 ) -> Tuple[np.ndarray, np.ndarray]:
     if voxels.ndim != 3:
         raise ValueError(f"invalid voxels dims '{voxels.ndim}', expected: 3")
@@ -397,7 +398,8 @@ def marching_cubes(
     inter_point_indexes = {}
     edge_inter_points = {}
     for r in range(0, num_rows-1):
-        # print(f"{r}/{num_rows}")
+        if verbose:
+            print(f"{r}/{num_rows}")
         for c in range(0, num_cols-1):
             for d in range(0, num_depths-1):
                 marching_cubes_voxel(
